@@ -1,8 +1,8 @@
 #include<iostream>
 #include<fstream>
 #include<algorithm>
-#include<list>
 #include<string>
+#include<list>
 
 /***********************/
 /* Forward declaration */
@@ -61,7 +61,7 @@ private:
     friend void include_book();
     friend void checkout_book();
     friend void return_book();
-    friend class CheckedOutBook();
+    friend class CheckedOutBook;
     friend Patron;
 
 public:
@@ -75,7 +75,7 @@ public:
 // ------------------------------------------------------------------
 // --- class CheckedOutBook                                       ---
 // ------------------------------------------------------------------
-class CheckedOutBook{
+class CheckedOutBook {
 private:
     std::list<Author>::iterator author;
     std::list<Book>::iterator book;
@@ -85,8 +85,8 @@ private:
     
 public:
     CheckedOutBook(
-        std::list<Author>::iterator author=0,
-        std::list<Book>::iterator book=0
+        std::list<Author>::iterator author=nullptr,
+        std::list<Book>::iterator book=nullptr
     ){
         this->author = author;
         this->book = book;
@@ -99,8 +99,10 @@ public:
     }
 };
 
-
-class Patron{
+// --------------------------------------------------------------
+// ----- Patron                                             -----
+// --------------------------------------------------------------
+class Patron {
 private:
     std::string name;
     std::list<CheckedOutBook> books;
@@ -123,7 +125,9 @@ public:
     }
 };
 
-/** Global containers */
+/*******************************************************************/
+/** Global containers                                              */
+/*******************************************************************/
 std::list<Author> catalog['Z'+1];
 std::list<Patron> people['Z'+1];
 
@@ -183,7 +187,16 @@ std::ostream& operator<<(std::ostream& out, const std::list<T>& lst){
 // -----
 std::string get_string(std::string message){
     std::string out;
-    std::cout << std::endl << message << "\n>> ";
+    std::string line(message.length(), '-');
+    const char *cyan = "\x1b[1;36m";
+    const char *yellow = "\x1b[1;33";
+    const char *green = "\x1b[1;32m";
+    const char *reset = "\x1b[m";
+    std::cout << std::endl
+        << yellow << line << reset << std::endl 
+        << cyan << message << cyan << std::endl
+        << yellow << line << reset << std::endl << std::endl
+        << green << ">> " << reset;
     std::cout.flush();
     std::getline(std::cin, out);
     return out;
