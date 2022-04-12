@@ -184,7 +184,9 @@ std::ostream& operator<<(std::ostream& out, const std::list<T>& lst){
     return out;
 }
 
-// -----
+// ---------------------------------------
+// -----         get_string()       ------
+// ---------------------------------------
 std::string get_string(std::string message){
     std::string out;
     std::string line(message.length(), '-');
