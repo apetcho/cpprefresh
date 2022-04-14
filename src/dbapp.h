@@ -79,7 +79,7 @@ public:
 template<typename T>
 class Database{
 public:
-    Database();
+    Database() = default;
     void run();
 private:
     std::fstream database;

@@ -167,3 +167,15 @@ std::istream& Student::read_from_file(std::istream& strm){
 
     return strm;
 }
+
+// --------------------------------------------------------------------
+// -----   DATABASE                                               -----
+// --------------------------------------------------------------------
+template<typename T>
+void Database<T>::add(T& obj){
+    database.open(fname, std::ios::in|std::ios::out);
+    database.clear();
+    database.seekg(0, std::ios::end);
+    obj.write_to_file(database);
+    database.close();
+}
