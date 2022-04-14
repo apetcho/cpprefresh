@@ -232,3 +232,63 @@ std::ostream& Database<T>::print(std::ostream& strm){
     database.close();
     return strm;
 }
+
+// *****
+enum class Option{ ADD = 1, FIND, MODIFY, EXIT };
+
+static void menu(){
+    std::cout << PURPLE << "--------------------------------------\n" << NORMAL;
+    std::cout << YELLOW << "     APPLICATION  COMMAND  MENU       \n" << NORMAL;
+    std::cout << PURPLE << "--------------------------------------\n" << NORMAL;
+    std::cout << BLUE << "1" << NORMAL << " --> ADD     \n";
+    std::cout << BLUE << "2" << NORMAL << " --> FIND    \n";
+    std::cout << BLUE << "3" << NORMAL << " --> MODIFY  \n";
+    std::cout << BLUE << "4" << NORMAL << " --> EXIT    \n";
+}
+
+template<typename T>
+void Database<T>::run(){
+    std::cout << CYAN << "Enter filename:" << NORMAL << std::endl;
+    std::cout << GREEN << PROMPT << NORMAL;
+    std::cin >> fname;
+    std::cin.ignore();
+    database.open(fname, std::ios::in);
+    if(database.fail()){
+        database.open(fname, std::ios::out);
+    }
+    database.close();
+    int opt;
+    Option cmd;
+
+    T record;
+    do{
+        menu();
+        std::cout << std::endl << CYAN;
+        std::cout << "Select an option" << NORMAL;
+        std::cout << GREEN << PROMPT << NORMAL;
+        std::cin >> opt;
+        cmd = Option{opt};
+        switch(cmd){
+        case Option::ADD:
+            std::cin >> record;
+            add(record);
+            break;
+        case Option::FIND:
+            record.read_key();
+            std::cout << "The record is ";
+            if(find(record) == false){ std::cout << "not "; }
+            std::cout << "in the database" << std::endl;
+            break;
+        case Option::MODIFY:
+            record.read_key();
+            modify(record);
+            break;
+        case Option::EXIT:
+            break;
+        default:
+            std::cout << "Wrong option" << std::endl;
+            break;
+        }
+        std::cout << *this;
+    }while(opt != 4);
+}
