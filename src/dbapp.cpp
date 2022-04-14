@@ -122,3 +122,9 @@ std::istream& Personal::read_from_console(std::istream& strm){
     header = "Salary:";
     read_console(strm, header, var);
 }
+
+// --------------------------------------------------------------------
+// -----   STUDENT                                                -----
+// --------------------------------------------------------------------
+// *****
+Student::Student() : Personal(), major(""){}
