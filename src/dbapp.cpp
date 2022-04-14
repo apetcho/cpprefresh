@@ -135,3 +135,10 @@ Student::Student(
     int yr, long slry, std::string maj
 )
 : Personal(ssn, nm, cty, yr, slry), major(maj) {}
+
+// *****
+void Student::write_to_file(std::fstream& strm) const{
+    Personal::write_to_file(strm);
+    strm << major << '\n';
+    strm.flush();
+}
