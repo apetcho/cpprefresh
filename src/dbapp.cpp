@@ -29,9 +29,19 @@ Personal::Personal(
 
 // *****
 void Personal::write_to_file(std::fstream& strm) const {
-    strm << ssn;
-    strm << name;
-    strm << city;
-    strm << year;
-    strm << salary;
+    strm << ssn << '\n';
+    strm << name << '\n';
+    strm << city << '\n';
+    strm << year << '\n';
+    strm << salary << '\n';
+    strm.flush();
+}
+
+// *****
+void Personal::read_from_file(std::fstream& strm){
+    std::getline(strm, ssn);
+    std::getline(strm, name);
+    std::getline(strm, city);
+    std::getline(strm, year);
+    std::getline(strm, salary);
 }
