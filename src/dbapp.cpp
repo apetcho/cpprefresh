@@ -179,3 +179,23 @@ void Database<T>::add(T& obj){
     obj.write_to_file(database);
     database.close();
 }
+
+// *****
+template<typename T>
+void Database<T>::modify(const T& obj){
+    T tmp;
+    database.open(fname, std::ios::in|std::ios::out);
+    database.clear();
+    while(!database.eof()){
+        tmp.read_from_file(database);
+        if(tmp == obj){ /** @todo check size*/
+            std::cin >> tmp;
+            database.seekg(-obj.size(), std::ios::cur);
+            tmp.write_to_file(database);
+            database.close();
+            return;
+        }
+    }
+    database.close();
+    std::cout << "The record to be modified is not the the database\n";
+}
