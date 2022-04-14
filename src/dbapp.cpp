@@ -7,6 +7,7 @@ constexpr std::string BLUE = "\x1b[34m";
 constexpr std::string PURPLE = "\x1b[35m";
 constexpr std::string CYAN = "\x1b[36m";
 constexpr std::string NORMAL = "\x1b[m";
+constexpr std::string PROMPT = ">> ";
 
 // --------------------------------------------------------------------
 // -----   PERSONAL                                               -----
@@ -44,4 +45,11 @@ void Personal::read_from_file(std::fstream& strm){
     std::getline(strm, city);
     std::getline(strm, year);
     std::getline(strm, salary);
+}
+
+// *****
+void Personal::read_key(){
+    std::cout << CYAN << "Enter SSN" << NORMAL << std::endl;
+    std::cout << GREEN << PROMPT << NORMAL;
+    std::getline(std::cin, ssn);
 }
