@@ -1,3 +1,6 @@
+#include<iomanip>
+#include<variant>
+#include<type_traits>
 #include "dbapp.h"
 
 constexpr std::string RED = "\x1b[31m";
@@ -56,11 +59,66 @@ void Personal::read_key(){
 
 // *****
 std::ostream& Personal::write_legibly(std::ostream& strm) const{
-    strm << "SSN = " << ssn << ", ";
-    strm << "Name = " << name << ", ";
-    strm << "City = " << city << ", ";
-    strm << "Year = " << year << ", ";
-    strm << "Salary = " << salary;
+    strm << YELLOW << "SSN = " << NORMAL << ssn << ", ";
+    strm << YELLOW << "Name = " << NORMAL << name << ", ";
+    strm << YELLOW << "City = " << NORMAL << city << ", ";
+    strm << YELLOW << "Year = " << NORMAL << year << ", ";
+    strm << YELLOW << "Salary = " << NORMAL << salary;
 
     return strm;
+}
+
+// -----
+using var_t = std::variant<int&, long&, std::string&>;
+struct VarVisitor {
+    std::istream stream;
+    std::string header;
+
+    VarVisitor(std::istream& strm, const std::string& hdr)
+    : stream(strm), header(hdr){}
+
+    void operator()(int& vname){
+        std::cout << CYAN << header << NORMAL;
+        std::cout << GREEN << PROMPT;
+        stream >> vname;
+    }
+
+    void operator()(long& vname){
+        std::cout << CYAN << header << NORMAL;
+        std::cout << GREEN << PROMPT;
+        stream >> vname;
+    }
+
+    void operator()(std::string& vname){
+        std::cout << CYAN << header << NORMAL;
+        std::cout << GREEN << PROMPT;
+        std::getline(stream, vname);
+    }
+};
+
+
+static void read_console(std::istream& strm, std::string header, var_t var){
+    VarVisitor visitor(strm, header);
+    std::visit(var, visitor);
+}
+
+
+// *****
+std::istream& Personal::read_from_console(std::istream& strm){
+    std::cout.flush();
+    var_t var = ssn;
+    std::string header = "SSN:";
+    read_console(strm, header, var);
+    var = name;
+    header = "Name:";
+    read_console(strm, header, var);
+    var = city;
+    header = "City:";
+    read_console(strm, header, var);
+    var = year;
+    header = "Birthyear:";
+    read_console(strm, header, var);
+    var = salary;
+    header = "Salary:";
+    read_console(strm, header, var);
 }
