@@ -4,4 +4,9 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED TRUE)
 
 add_executable(LibraryApp src/library.cpp)
-add_executable(DBMain src/dbappmain.cpp src/dbapp.cpp src/dbapp.h)
+
+# ----
+add_library(dbapp src/dbapp.cpp src/dbapp.hpp)
+add_executable(DBMain src/dbappmain.cpp src/dbapp.hpp)
+target_link_libraries(DBMain dbapp)
+# ----

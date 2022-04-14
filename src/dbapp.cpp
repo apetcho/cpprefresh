@@ -3,14 +3,14 @@
 #include<type_traits>
 #include "dbapp.hpp"
 
-constexpr std::string RED = "\x1b[31m";
-constexpr std::string GREEN = "\x1b[32m";
-constexpr std::string YELLOW = "\x1b[33m";
-constexpr std::string BLUE = "\x1b[34m";
-constexpr std::string PURPLE = "\x1b[35m";
-constexpr std::string CYAN = "\x1b[36m";
-constexpr std::string NORMAL = "\x1b[m";
-constexpr std::string PROMPT = ">> ";
+const std::string RED = "\x1b[31m";
+const std::string GREEN = "\x1b[32m";
+const std::string YELLOW = "\x1b[33m";
+const std::string BLUE = "\x1b[34m";
+const std::string PURPLE = "\x1b[35m";
+const std::string CYAN = "\x1b[36m";
+const std::string NORMAL = "\x1b[m";
+const std::string PROMPT = ">> ";
 
 // --------------------------------------------------------------------
 // -----   PERSONAL                                               -----
@@ -46,8 +46,8 @@ void Personal::read_from_file(std::fstream& strm){
     std::getline(strm, ssn);
     std::getline(strm, name);
     std::getline(strm, city);
-    std::getline(strm, year);
-    std::getline(strm, salary);
+    strm >> year;
+    strm >> salary;
 }
 
 // *****
@@ -69,58 +69,42 @@ std::ostream& Personal::write_legibly(std::ostream& strm) const{
 }
 
 // -----
-using var_t = std::variant<int&, long&, std::string&>;
-struct VarVisitor {
-    std::istream stream;
-    std::string header;
-
-    VarVisitor(std::istream& strm, const std::string& hdr)
-    : stream(strm), header(hdr){}
-
-    void operator()(int& vname){
+template<typename T>
+static void read_console(std::istream& stream, std::string header, T& vname){
+    if constexpr (std::is_same_v<T, int>){
         std::cout << CYAN << header << NORMAL;
         std::cout << GREEN << PROMPT;
         stream >> vname;
-    }
-
-    void operator()(long& vname){
+    }else if constexpr(std::is_same_v<T, long>){
         std::cout << CYAN << header << NORMAL;
         std::cout << GREEN << PROMPT;
         stream >> vname;
-    }
-
-    void operator()(std::string& vname){
+    }else if constexpr (std::is_same_v<T, std::string>){
         std::cout << CYAN << header << NORMAL;
         std::cout << GREEN << PROMPT;
-        std::getline(stream, vname);
+        //const size_t len = 80;
+        //char *value;
+        //stream.getline(value, len);
+        //value[len] = '\0';
+        //vname = std::string(value);
+        std::getline(stream, vname, '\n');
     }
-};
-
-
-static void read_console(std::istream& strm, std::string header, var_t var){
-    VarVisitor visitor(strm, header);
-    std::visit(var, visitor);
 }
 
 
 // *****
 std::istream& Personal::read_from_console(std::istream& strm){
     std::cout.flush();
-    var_t var = ssn;
     std::string header = "SSN:";
-    read_console(strm, header, var);
-    var = name;
+    read_console(strm, header, ssn);
     header = "Name:";
-    read_console(strm, header, var);
-    var = city;
+    read_console(strm, header, name);
     header = "City:";
-    read_console(strm, header, var);
-    var = year;
+    read_console(strm, header, city);
     header = "Birthyear:";
-    read_console(strm, header, var);
-    var = salary;
+    read_console(strm, header, year);
     header = "Salary:";
-    read_console(strm, header, var);
+    read_console(strm, header, salary);
 
     return strm;
 }
@@ -159,11 +143,10 @@ std::ostream& Student::write_legibly(std::ostream& strm) const {
 }
 
 // ****
-std::istream& Student::read_from_file(std::istream& strm){
+std::istream& Student::read_from_console(std::istream& strm){
     Personal::read_from_console(strm);
-    var_t var = major;
     std::string header = "Major:";
-    read_console(strm, header, var);
+    read_console(strm, header, major);
 
     return strm;
 }
@@ -234,7 +217,7 @@ std::ostream& Database<T>::print(std::ostream& strm){
 }
 
 // *****
-enum class Option{ ADD = 1, FIND, MODIFY, EXIT };
+enum class OptionCmd{ ADD = 1, FIND, MODIFY, EXIT };
 
 static void menu(){
     std::cout << PURPLE << "--------------------------------------\n" << NORMAL;
@@ -257,33 +240,34 @@ void Database<T>::run(){
         database.open(fname, std::ios::out);
     }
     database.close();
+    
     int opt;
-    Option cmd;
-
+    OptionCmd cmd;
     T record;
+
     do{
         menu();
         std::cout << std::endl << CYAN;
         std::cout << "Select an option" << NORMAL;
         std::cout << GREEN << PROMPT << NORMAL;
         std::cin >> opt;
-        cmd = Option{opt};
+        cmd = OptionCmd{opt};
         switch(cmd){
-        case Option::ADD:
+        case OptionCmd::ADD:
             std::cin >> record;
             add(record);
             break;
-        case Option::FIND:
+        case OptionCmd::FIND:
             record.read_key();
             std::cout << "The record is ";
             if(find(record) == false){ std::cout << "not "; }
             std::cout << "in the database" << std::endl;
             break;
-        case Option::MODIFY:
+        case OptionCmd::MODIFY:
             record.read_key();
             modify(record);
             break;
-        case Option::EXIT:
+        case OptionCmd::EXIT:
             break;
         default:
             std::cout << "Wrong option" << std::endl;
