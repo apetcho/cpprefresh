@@ -29,5 +29,9 @@ Personal::Personal(
 
 // *****
 void Personal::write_to_file(std::fstream& strm) const {
-    
+    strm << ssn;
+    strm << name;
+    strm << city;
+    strm << year;
+    strm << salary;
 }
