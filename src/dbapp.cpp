@@ -121,6 +121,8 @@ std::istream& Personal::read_from_console(std::istream& strm){
     var = salary;
     header = "Salary:";
     read_console(strm, header, var);
+
+    return strm;
 }
 
 // --------------------------------------------------------------------
@@ -147,5 +149,15 @@ void Student::write_to_file(std::fstream& strm) const{
 std::ostream& Student::write_legibly(std::ostream& strm) const {
     Personal::write_legibly(strm);
     strm << ", " << YELLOW << major << NORMAL ;
+    return strm;
+}
+
+// ****
+std::istream& Student::read_from_file(std::istream& strm){
+    Personal::read_from_console(strm);
+    var_t var = major;
+    std::string header = "Major:";
+    read_console(strm, header, var);
+
     return strm;
 }
