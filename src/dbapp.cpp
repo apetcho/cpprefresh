@@ -142,3 +142,10 @@ void Student::write_to_file(std::fstream& strm) const{
     strm << major << '\n';
     strm.flush();
 }
+
+// ****
+std::ostream& Student::write_legibly(std::ostream& strm) const {
+    Personal::write_legibly(strm);
+    strm << ", " << YELLOW << major << NORMAL ;
+    return strm;
+}
