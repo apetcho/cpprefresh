@@ -199,3 +199,21 @@ void Database<T>::modify(const T& obj){
     database.close();
     std::cout << "The record to be modified is not the the database\n";
 }
+
+// *****
+template<typename T>
+bool Database<T>::find(const T& obj){
+    T tmp;
+    database.open(fname, std::ios::in);
+    database.clear();
+    while(!database.eof()){
+        tmp.read_from_file(database);
+        if(tmp == obj){
+            database.close();
+            return true;
+        }
+    }
+
+    database.close();
+    return false;
+}
