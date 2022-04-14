@@ -4,7 +4,9 @@
 #include<fstream>
 #include<string>
 
-// -----
+// --------------------------------------------------------------------
+// -----   PERSONAL                                               -----
+// --------------------------------------------------------------------
 class Personal{
 protected:
     int year;
@@ -41,7 +43,9 @@ public:
     }
 };
 
-// -----
+// -------------------------------------------------------------------
+// -----  STUDENT                                                -----
+// -------------------------------------------------------------------
 class Student: public Personal {
 protected:
     std::string major;
@@ -69,4 +73,24 @@ public:
     }
 };
 
+// -------------------------------------------------------------------
+// -----  DATABASE                                               -----
+// -------------------------------------------------------------------
+template<typename T>
+class Database{
+public:
+    Database();
+    void run();
+private:
+    std::fstream database;
+    std::string fname;
+    std::ostream& print(const std::ostream& strm);
+    void add(T& );
+    bool find(const T&);
+    void modify(const T&);
+
+    friend std::ostream& operator<<(std::ostream& strm, const Database& db){
+        return db.print(strm);
+    }
+};
 #endif
