@@ -36,8 +36,8 @@ public:
     }
 
     // ---
-    bool operator==(const Book& book) const {
-        return title == book.title;
+    friend bool operator==(const Book& lhs, const Book& rhs) {
+        return lhs.title == rhs.title;
     }
 };
 
@@ -67,8 +67,8 @@ private:
 public:
     Author(){}
 
-    bool operator==(const Author& author) const{
-        return name == author.name;
+    friend bool operator==(const Author& lhs, const Author& rhs){
+        return lhs.name == rhs.name;
     }
 };
 
@@ -84,18 +84,20 @@ private:
     friend Patron;
     
 public:
+    CheckedOutBook() = default;
     CheckedOutBook(
-        std::list<Author>::iterator author=nullptr,
-        std::list<Book>::iterator book=nullptr
+        std::list<Author>::iterator author,
+        std::list<Book>::iterator book
     ){
         this->author = author;
         this->book = book;
     }
 
     // ---
-    bool operator==(const CheckedOutBook& book) const{
-        return author->name == book.author->name &&
-            book->title == book.book->title;
+    friend bool
+    operator==(const CheckedOutBook& lhs, const CheckedOutBook& rhs){
+        return lhs.author->name == rhs.author->name &&
+            lhs.book->title == rhs.book->title;
     }
 };
 
@@ -120,8 +122,8 @@ private:
 public:
     Patron(){}
     // ---
-    bool operator==(const Patron& patron) const {
-        return name == patron.name;
+    friend bool operator==(const Patron& lhs, const Patron& rhs) {
+        return lhs.name == rhs.name;
     }
 };
 
@@ -134,11 +136,11 @@ std::list<Patron> people['Z'+1];
 /***************************/
 /** Author::print_author() */
 /***************************/
-std::ostream& Author::print_author(std::ostream& out) const{
+std::ostream& Author::print_author(std::ostream& out) const {
     out << name << std::endl;
     std::list<Book>::const_iterator ref = books.begin();
     for(; ref != books.end(); ref++){
-        out << +ref;
+        out << *ref;
     }
 
     return out;
@@ -178,7 +180,8 @@ std::ostream& Patron::print_patron(std::ostream& out) const {
 // ----- 
 template<typename T>
 std::ostream& operator<<(std::ostream& out, const std::list<T>& lst){
-    for(std::list<T>::const_iterator ref=lst.begin(); ref != lst.end(); ref++){
+    typename std::list<T>::const_iterator ref;
+    for(ref=lst.cbegin(); ref != lst.cend(); ref++){
         out << *ref;
     }
     return out;
@@ -208,9 +211,9 @@ std::string get_string(std::string message){
 // ----- status() -----
 // --------------------
 void status(){
-    register int i;
+    //int i;
     std::cout << "Library has the following books:" << std::endl << std::endl;
-    for(i='A'; i <= 'Z'; i++){
+    for(int i='A'; i <= 'Z'; i++){
         if(!catalog[i].empty()){
             std::cout << catalog[i];
         }
@@ -218,7 +221,7 @@ void status(){
     std::cout << std::endl;
     std::cout << "The following people are using the library"
         << std::endl << std::endl;
-    for(i='A'; i <= 'Z'; i++){
+    for(int i='A'; i <= 'Z'; i++){
         if(!people[i].empty()){
             std::cout << people[i];
         }
@@ -273,7 +276,7 @@ void checkout_book(){
         book.title = get_string("Enter the title of the book:");
         ibook = std::find(
             iauthor->books.begin(),
-            iauthor->books.end(), end
+            iauthor->books.end(), book
         );
         if(ibook == iauthor->books.end()){
             std::cout << "Misspelled title\n" << std::endl;
