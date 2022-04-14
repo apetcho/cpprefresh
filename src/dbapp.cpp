@@ -145,7 +145,13 @@ void Student::write_to_file(std::fstream& strm) const{
     strm.flush();
 }
 
-// ****
+// *****
+void Student::read_from_file(std::fstream& strm){
+    Personal::read_from_file(strm);
+    std::getline(strm, major);
+}
+
+// *****
 std::ostream& Student::write_legibly(std::ostream& strm) const {
     Personal::write_legibly(strm);
     strm << ", " << YELLOW << major << NORMAL ;
