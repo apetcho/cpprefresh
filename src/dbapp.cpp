@@ -53,3 +53,14 @@ void Personal::read_key(){
     std::cout << GREEN << PROMPT << NORMAL;
     std::getline(std::cin, ssn);
 }
+
+// *****
+std::ostream& Personal::write_legibly(std::ostream& strm) const{
+    strm << "SSN = " << ssn << ", ";
+    strm << "Name = " << name << ", ";
+    strm << "City = " << city << ", ";
+    strm << "Year = " << year << ", ";
+    strm << "Salary = " << salary;
+
+    return strm;
+}
