@@ -217,3 +217,18 @@ bool Database<T>::find(const T& obj){
     database.close();
     return false;
 }
+
+// *****
+template<typename T>
+std::ostream& Database<T>::print(std::ostream& strm){
+    T tmp;
+    database.open(fname, std::ios::in);
+    database.clear();
+    while(true){
+        tmp.read_from_file(database);
+        if(database.eof()){break;}
+        strm << tmp << std::endl;
+    }
+    database.close();
+    return strm;
+}

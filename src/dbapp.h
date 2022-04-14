@@ -84,7 +84,7 @@ public:
 private:
     std::fstream database;
     std::string fname;
-    std::ostream& print(const std::ostream& strm);
+    std::ostream& print(std::ostream& strm);
     void add(T& );
     bool find(const T&);
     void modify(const T&);
