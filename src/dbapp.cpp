@@ -128,3 +128,10 @@ std::istream& Personal::read_from_console(std::istream& strm){
 // --------------------------------------------------------------------
 // *****
 Student::Student() : Personal(), major(""){}
+
+// *****
+Student::Student(
+    std::string ssn, std::string nm, std::string cty,
+    int yr, long slry, std::string maj
+)
+: Personal(ssn, nm, cty, yr, slry), major(maj) {}
