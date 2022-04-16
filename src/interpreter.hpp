@@ -51,7 +51,7 @@ private:
     }
 
     double find_value(std::string&);
-    void process_node(std::string&, double);
+    void process_node(const std::string&, double);
 
     // ---
     friend std::ostream& operator<<(std::ostream& out, const Statement& stmnt){

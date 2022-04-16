@@ -16,3 +16,16 @@ double Statement::find_value(std::string& name){
     }
     return 0.0;
 }
+
+// ----
+void Statement::process_node(const std::string& name, double val){
+    Node tmp{name, val};
+    std::list<Node>::iterator iter = std::find(
+        kvlist.begin(), kvlist.end(), tmp
+    );
+    if(iter != kvlist.end()){
+        iter->value = val;
+    }else{
+        kvlist.pop_front(tmp);
+    }
+}
