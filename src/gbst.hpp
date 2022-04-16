@@ -296,3 +296,24 @@ void BST<T>::find_and_delete_copying(const T& element){
         std::cout << "The tree is empty" << std::endl;
     }
 }
+
+// ----------------------------------------------------------------------
+// ----- BST<T>::delete_by_merging(*node)                           -----
+// ----------------------------------------------------------------------
+template<typename T>
+void BST<T>::delete_by_merging(BSTNode<T> *&node){
+    BSTNode<T> *tmp = node;
+    if(node != nullptr){
+        if(!node->right){ node = node->left;}
+        else if(!node->left){node = node->right; }
+        else{
+            tmp = node->left;
+            while(tmp->right != nullptr){ tmp = tmp->right; }
+            tmp->right = node->right;
+            tmp = node;
+            node = node->left;
+        }
+
+        delete tmp;
+    }
+}
