@@ -21,12 +21,12 @@ class Personal{
 public:
     Personal();
     Personal(std::string, std::string, std::string, int, long);
-    virtual void write_to_file(std::fstream& stream) const;
-    virtual void read_from_file(std::fstream& stream);
+    void write_to_file(std::fstream& stream) const;
+    void read_from_file(std::fstream& stream);
     void read_key();
 
     // ---
-    virtual int size() const {
+    int size() const {
         return 9 + name.size() + city.size() + sizeof(year) + sizeof(salary);
     }
 
@@ -34,7 +34,7 @@ public:
         return lhs.ssn == rhs.ssn;
     }
 
-    virtual ~Personal(){}
+    ~Personal(){}
 
 protected:
     int year;
@@ -65,20 +65,20 @@ public:
 
     void write_to_file(std::fstream& strm) const;
     void read_from_file(std::fstream& strm);
-    int size() const override{
+    int size() const{
         return Personal::size() + major.size();
     }
 
 
 protected:
     std::string major;
-    std::ostream& write_legibly(std::ostream& stream) const override;
+    std::ostream& write_legibly(std::ostream& stream) const;
 
     friend std::ostream& operator<<(std::ostream& strm, Student& student){
         return student.write_legibly(strm);
     }
 
-    std::istream& read_from_console(std::istream& strm) override;
+    std::istream& read_from_console(std::istream& strm);
 
     friend std::istream& operator>>(std::istream& strm, Student& student){
         return student.read_from_console(strm);

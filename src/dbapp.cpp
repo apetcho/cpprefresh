@@ -105,14 +105,14 @@ Student::Student(
 : Personal(ssn, nm, cty, yr, slry), major(maj) {}
 
 // *****
-void Student::write_to_file(std::fstream& strm) const override {
+void Student::write_to_file(std::fstream& strm) const{
     Personal::write_to_file(strm);
     strm << major << '\n';
     strm.flush();
 }
 
 // *****
-void Student::read_from_file(std::fstream& strm) override {
+void Student::read_from_file(std::fstream& strm) {
     Personal::read_from_file(strm);
     std::getline(strm, major);
 }

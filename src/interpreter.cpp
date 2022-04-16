@@ -26,14 +26,14 @@ void Statement::process_node(const std::string& name, double val){
     if(iter != kvlist.end()){
         iter->value = val;
     }else{
-        kvlist.pop_front(tmp);
+        kvlist.push_front(tmp);
     }
 }
 
 // ----
 void Statement::read_key(std::string& name){
     int i=0;
-    char *buf;
+    char buf[80];
     if(isspace(ch)){
         std::cin >> ch;     // skip blanks;
     }
@@ -65,7 +65,7 @@ double Statement::factor(){
     if(isdigit(ch) || ch == '.'){
         std::cin.putback(ch);
         std::cin >> var >> ch;
-    }else if(ch = '('){
+    }else if(ch == '('){
         var = expression();
         if(ch == ')'){
             std::cin >> ch;
@@ -132,7 +132,7 @@ void Statement::get_statement(){
         cmd[i] = toupper(cmd[i]);
     }
     if(cmd == "STATUS"){
-        return *this;
+        std::cout << *this;
     }else if(cmd == "PRINT"){
         read_key(name);
         std::cout << name << " = " << find_value(name) << std::endl;
@@ -144,7 +144,7 @@ void Statement::get_statement(){
         }
         if(ch == '='){
             val = expression();
-            if(ch != ";")
+            if(ch != ';')
             issue_error("There are some extras in the statement");
         }else{
             process_node(name, val);
