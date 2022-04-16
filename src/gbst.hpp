@@ -226,3 +226,15 @@ void BST<T>::preorder(BSTNode<T> *node){
         preorder(node->right);
     }
 }
+
+// ----------------------------------------------------------------------
+// ----- BST<T>::postorder(item)                                    -----
+// ----------------------------------------------------------------------
+template<typename T>
+void BST<T>::postorder(BSTNode<T> *node){
+    if(node != nullptr){
+        postorder(node->left);
+        postorder(node->right);
+        visit(node);
+    }
+}
