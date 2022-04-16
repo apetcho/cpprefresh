@@ -265,3 +265,34 @@ void BST<T>::delete_by_copying(BSTNode<T>*& node){
 
     delete tmp;
 }
+
+// ----------------------------------------------------------------------
+// ----- BST<T>::find_and_delete_by_copying(item)                   -----
+// ----------------------------------------------------------------------
+template<typename T>
+void BST<T>::find_and_delete_copying(const T& element){
+    BSTNode<T> *node = root;
+    BSTNode<T> *prev = nullptr;
+
+    while(node != nullptr && !(node->item == element)){
+        prev = node;
+        if(element < node->item){
+            node = node->left;
+        }else{
+            node = node->right;
+        }
+    }
+    if(node != nullptr && node->item == element){
+        if(node == root){
+            delete_by_copying(root);
+        }else if(prev->left == node){
+            delete_by_copying(prev->left);
+        }else{
+            delete_by_copying(prev->right);
+        }
+    }else if( root != nullptr){
+        std::cout << "Element " << element << " not in the tree" << std::endl;
+    }else{
+        std::cout << "The tree is empty" << std::endl;
+    }
+}
