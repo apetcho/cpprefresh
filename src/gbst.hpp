@@ -86,7 +86,7 @@ public:
     // ----- insert()
     void insert(const T&);
     // ----- recursive_insert()
-    void recrusive_insert(const T& element){
+    void recursive_insert(const T& element){
         recursive_insert(root, element);
     }
     // ----- search()
@@ -158,4 +158,16 @@ void BST<T>::insert(const T& element){
     }else{
         prev->right = new BSTNode<T>(element);
     }
+}
+
+// ----------------------------------------------------------------------
+// ----- BST<T>::insert(item)                                       -----
+// ----------------------------------------------------------------------
+template<typename T>
+void BST<T>::recursive_insert(BSTNode<T>*& node, const T& element){
+    if(node == nullptr){
+        node = new BSTNode<T>(element);
+    }else if(element < node->item){
+        recursive_insert(node->left, element);
+    }else{ recursive_insert(node->right, element);}
 }
