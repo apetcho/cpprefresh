@@ -1,4 +1,5 @@
 /** Distinct representatives */
+#include<algorithm>
 #include<fstream>
 #include<cctype>
 #include<cstring>
@@ -173,5 +174,30 @@ std::ostream& operator<<(std::ostream& out, const NetTreeNode& node){
 std::ostream& operator<<(std::ostream& out, const Vertex& vertex){
     out << vertex.idnum << " " << vertex.capacity << " " << vertex.edgeFlow
         << " " << vertex.forward << "| ";
+    return out;
+}
+
+// ----------------------------------------------------------------------
+// ----- operator<< for Network                                     -----
+// ----------------------------------------------------------------------
+std::ostream& operator<<(std::ostream& out, const Network& net){
+    std::ostream_iterator<Vertex> output(out, " ");
+    for(int i=0; i < net.nvertices; i++){
+        out << i << ": "
+            << net.vertices[i].idname << "|"
+            << net.vertices[i].vertexFlow << "|"
+            << net.vertices[i].labeled << "|"
+            << net.vertices[i].parent << "|"
+            << "-> ";
+        if(net.vertices[i].adjacent != nullptr){
+            std::copy(
+                net.vertices[i].adjacent->begin(),
+                net.vertices[i].adjacent->end(),
+                output
+            );
+        }
+        out << std::endl;
+    }
+
     return out;
 }
