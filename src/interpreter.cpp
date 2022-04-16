@@ -99,3 +99,20 @@ double Statement::term(){
         }
     }
 }
+
+// -----
+double Statement::expression(){
+    double t = term();
+    while(true){
+        switch(ch){
+        case '+':
+            t += term();
+            break;
+        case '-':
+            t -= term();
+            break;
+        default:
+            return t;
+        }
+    }
+}
