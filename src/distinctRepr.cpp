@@ -388,5 +388,16 @@ void Network::ford_fulkerson_max_flow(){
 // ----- MAIN  DRIVER -----
 // ------------------------
 int main(int argc, char **argv){
-    /** @todo */
+    std::string filename;
+    Network net;
+    if(argc != 2){
+        std::cout << "Enter a file name:\n>> ";
+        std::cin >> filename;
+    }else{
+        filename = std::string(argv[1]);
+    }
+    net.read_committees(filename);
+    net.ford_fulkerson_max_flow();
+    std::cout << net;
+    return EXIT_SUCCESS;
 }
