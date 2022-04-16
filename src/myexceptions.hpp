@@ -35,4 +35,12 @@ public:
     ReadError(const std::string& fname) : FileError(fname){}
 };
 
+// --------------------------------------------------------------------
+// ----- class WriteError                                         -----
+// --------------------------------------------------------------------
+class WriteError : public FileError{
+public:
+    WriteError(const std::string& fname) : FileError(fname) {}
+};
+
 #endif
