@@ -12,7 +12,7 @@ private:
     std::string key;
     double value;
 public:
-    Node(std::string name="", double val=0.0) : key(name), value(val){}
+    Node(const std::string name="", double val=0.0) : key(name), value(val){}
 
 private:
     friend class Statement;
