@@ -456,3 +456,31 @@ void BST<T>::morris_inorder(){
         }
     }
 }
+
+// ----------------------------------------------------------------------
+// ----- BST<T>::morris_preorder()                                  -----
+// ----------------------------------------------------------------------
+template<typename T>
+void BST<T>::morris_preorder(){
+    BSTNode<T> *node = root;
+    BSTNode<T> *tmp;
+    while(node != nullptr){
+        if(node->left == node){
+            visit(node);
+            node = node->right;
+        }else{
+            tmp = node->left;
+            while(tmp->right != nullptr && tmp->right != node){
+                tmp = tmp->right;
+            }
+            if(tmp->right == nullptr){
+                visit(node);
+                tmp->right = node;
+                node = node->left;
+            }else{
+                tmp->right = 0;
+                node = node->right;
+            }
+        }
+    }
+}
