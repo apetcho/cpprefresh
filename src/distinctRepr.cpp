@@ -166,3 +166,12 @@ std::ostream& operator<<(std::ostream& out, const NetTreeNode& node){
     out << node.idnum << " " << node.idname << " ";
     return out;
 }
+
+// ----------------------------------------------------------------------
+// ----- operator<< for Vertex                                      -----
+// ----------------------------------------------------------------------
+std::ostream& operator<<(std::ostream& out, const Vertex& vertex){
+    out << vertex.idnum << " " << vertex.capacity << " " << vertex.edgeFlow
+        << " " << vertex.forward << "| ";
+    return out;
+}
