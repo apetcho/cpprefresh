@@ -185,3 +185,20 @@ T* BST<T>::search(BSTNode<T> *node, const T& element) const {
 
     return nullptr;
 }
+
+// ----------------------------------------------------------------------
+// ----- BST<T>::recursive_search(item)                             -----
+// ----------------------------------------------------------------------
+template<typename T>
+T* BST<T>::recursive_search(BSTNode<T> *node, const T& element) const{
+    if(node != nullptr){
+        if(element == node->item){return &node->item;}
+        else if(element < node->item){
+            return recursive_search(node->left, element);
+        }else{
+            return recursive_search(node->right, element);
+        }
+    }else{
+        return nullptr;
+    }
+}
