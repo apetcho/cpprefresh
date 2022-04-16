@@ -202,3 +202,15 @@ T* BST<T>::recursive_search(BSTNode<T> *node, const T& element) const{
         return nullptr;
     }
 }
+
+// ----------------------------------------------------------------------
+// ----- BST<T>::inorder(item)                                      -----
+// ----------------------------------------------------------------------
+template<typename T>
+void BST<T>::inorder(BSTNode<T> *node){
+    if(node != nullptr){
+        inorder(node->left);
+        visit(node);
+        inorder(node->right);
+    }
+}
