@@ -34,6 +34,9 @@ public:
 // ----- class DepositAccount                                     -----
 // --------------------------------------------------------------------
 class DepositAccount : public Account{
+private:
+    long limit; /** @todo XXX */
+    long deb;   /** @todo XXX */
     /** @todo ...*/
     /* Data memebers, constructor, ...*/
 
