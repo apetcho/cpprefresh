@@ -1,6 +1,11 @@
 // Defines the classes Acoount, DepositAccount, and SavingAccount
 // with virtual read and write methods
+#ifndef __MY_ACCOUNT_H_
+#define __MY_ACCOUNT_H_
 #include<iostream>
+#include<fstream>
+
+#include "myexceptions.hpp"
 
 /** @todo .... */
 
@@ -67,3 +72,21 @@ class SavingAccount: public Account{
     std::ostream& write(std::ostream& strm) const;
     std::istream& read(std::istream& strm);
 };
+
+// --------------------------------------------------------------------
+// ----- class AccountFile                                        -----
+// --------------------------------------------------------------------
+class AccountFile{
+private:
+    std::fstream stream;        // File stream
+    std::string name;           // File name
+
+public:
+    AccountFile(const std::string& fname) throw(OpenError);
+    ~AccountFile(){ stream.close(); }
+
+    long append(Account& account) throw(WriteError);
+    Account* retrieve(long pos) throw(ReadError);
+};
+
+#endif
