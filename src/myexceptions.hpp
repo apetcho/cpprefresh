@@ -19,4 +19,11 @@ public:
 };
 
 
+// --------------------------------------------------------------------
+// ----- class OpenError                                          -----
+// --------------------------------------------------------------------
+class OpenError : public FileError{
+public:
+    OpenError(const std::string& fname) : FileError(fname) {}
+};
 #endif
