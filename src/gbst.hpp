@@ -484,3 +484,42 @@ void BST<T>::morris_preorder(){
         }
     }
 }
+
+
+// ----------------------------------------------------------------------
+// ----- BST<T>::morris_postorder()                                 -----
+// ----------------------------------------------------------------------
+template<typename T>
+void BST<T>::morris_postorder(){
+    BSTNode<T> *node = new BSTNode<T>();
+    BSTNode<T> *tmp, *q, *r, *s;
+    node->left = root;
+    while(node != nullptr){
+        if(node->left == nullptr){ node = node->right; }
+        else{
+            tmp = node->left;
+            while(tmp->right != nullptr && tmp->right != node){
+                tmp = tmp->right;
+            }
+            if(tmp->right == nullptr){
+                tmp->right = node;
+                node = node->left;
+            }else{
+                for(q = node->left, r = q->right, s=r->right;
+                    r != node; q = r, r = s, s = s->right
+                ){
+                    r->right = q;
+                }
+                for(s = q->right;
+                    q = node->left;
+                    r->right0r, r=q, q=s, s=s->right
+                ){
+                    visit(q);
+                }
+                visit(node->left);
+                tmp->right = nullptr;
+                node = node->right;
+            }
+        }
+    }//
+}
