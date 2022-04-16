@@ -204,7 +204,7 @@ T* BST<T>::recursive_search(BSTNode<T> *node, const T& element) const{
 }
 
 // ----------------------------------------------------------------------
-// ----- BST<T>::inorder(item)                                      -----
+// ----- BST<T>::inorder(*node)                                     -----
 // ----------------------------------------------------------------------
 template<typename T>
 void BST<T>::inorder(BSTNode<T> *node){
@@ -212,5 +212,17 @@ void BST<T>::inorder(BSTNode<T> *node){
         inorder(node->left);
         visit(node);
         inorder(node->right);
+    }
+}
+
+// ----------------------------------------------------------------------
+// ----- BST<T>::preorder(*node)                                    -----
+// ----------------------------------------------------------------------
+template<typename T>
+void BST<T>::preorder(BSTNode<T> *node){
+    if(node != nullptr){
+        visit(node);
+        preorder(node->left);
+        preorder(node->right);
     }
 }
