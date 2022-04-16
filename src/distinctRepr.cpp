@@ -115,3 +115,22 @@ class LocalTree: public BST<NetTreeNode>{
             node->item.adjacent;
     }
 }
+
+// ----------------------------------------------------------------------
+// ----- class Network                                              -----
+// ----------------------------------------------------------------------
+class Network{
+public:
+
+private:
+    const int sink;
+    const int source;
+    const int none;
+    VertexArrayRecord *vertices;
+    VertexArrayRecord **verticePtr;
+
+    // -- edgeSlack()
+    int edgeSlack(Vertex *vertex) const{
+        return vertex->capacity - vertex->edgeFlow;
+    }
+};
