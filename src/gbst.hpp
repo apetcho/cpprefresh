@@ -342,3 +342,21 @@ void BST<T>::find_and_delete_by_merging(const T& element){
         std::cout << "The tree is empty" << std::endl;
     }
 }
+
+// ----------------------------------------------------------------------
+// ----- BST<T>::iterative_preorder()                               -----
+// ----------------------------------------------------------------------
+template<typename T>
+void BST<T>::iterative_preorder(){
+    Stack<BSTNode<T>*> travStack;
+    BSTNode<T> *node = root;
+    if(node != nullptr){
+        travStack.push(node);
+        while(!travStack.empty()){
+            node = travStack.pop();
+            visit(node);
+            if(node->right != nullptr){ travStack.push(node->right); }
+            if(node->left != nullptr){ travStack.push(node->left); }
+        }
+    }
+}
