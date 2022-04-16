@@ -409,3 +409,21 @@ void BST<T>::iterative_postorder(){
         node = node->right;
     }
 }
+
+// ----------------------------------------------------------------------
+// ----- BST<T>::breadth_first()                                    -----
+// ----------------------------------------------------------------------
+template<typename T>
+void BST<T>::breadth_first(){
+    Queue<BSTNode<T>*> myqueue;
+    BSTNode<T> *node = root;
+    if(node != nullptr){
+        myqueue.enqueue(node);
+        while(!myqueue.empty()){
+            node = myqueue.dequeue();
+            visit(node);
+            if(node->left != nullptr){ myqueue.enqueue(node->left); }
+            if(node->right != nullptr){ myqueue.enqueue(node->right); }
+        }
+    }
+}
