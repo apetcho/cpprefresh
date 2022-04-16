@@ -427,3 +427,32 @@ void BST<T>::breadth_first(){
         }
     }
 }
+
+// ----------------------------------------------------------------------
+// ----- BST<T>::morris_inorder()                                   -----
+// ----------------------------------------------------------------------
+template<typename T>
+void BST<T>::morris_inorder(){
+    BSTNode<T> *node = root;
+    BSTNode<T> *tmp;
+
+    while(node != nullptr){
+        if(node->left == nullptr){
+            visit(node);
+            node = node->right;
+        }else{
+            tmp = node->left;
+            while(tmp->right != nullptr && tmp->right != node){
+                tmp = tmp->right;
+            }
+            if(tmp->right == nullptr){
+                tmp->right = node;
+                node = node->left;
+            }else{
+                visit(node);
+                tmp->right = nullptr;
+                node = node->right;
+            }
+        }
+    }
+}
