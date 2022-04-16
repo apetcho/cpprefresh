@@ -133,4 +133,9 @@ private:
     int edgeSlack(Vertex *vertex) const{
         return vertex->capacity - vertex->edgeFlow;
     }
+
+    // -- min()
+    int min(int a, int b) const {
+        return a < b ? a : b;
+    }
 };
