@@ -82,3 +82,20 @@ double Statement::factor(){
 
     return minus * var;
 }
+
+// ----
+double Statement::term(){
+    double f = factor();
+    while(true){
+        switch(ch){
+        case '*':
+            f *= factor();
+            break;
+        case '/':
+            f /= factor();
+            break;
+        default:
+            return f;
+        }
+    }
+}
