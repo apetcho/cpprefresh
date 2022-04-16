@@ -3,6 +3,7 @@
 
 #include<fstream>
 #include<iostream>
+#include<string>
 
 // --------------------------------------------------------------------
 // ----- class IndexEntry                                         -----
@@ -25,6 +26,23 @@ public:
     std::fstream& read(std::fstream& strm);
     std::fstream& write_at(std::fstream& strm, long pos) const;
     std::fstream& read_at(std::fstream& strm, long pos); 
+};
+
+// --------------------------------------------------------------------
+// ----- class IndexFile                                          -----
+// --------------------------------------------------------------------
+class IndexFile{
+private:
+    std::fstream index;
+    std::string name;               // Filename of index
+
+public:
+    IndexFile(const std::string& fname);
+    ~IndexFile(){ index.close(); }
+
+    void insert(long key, long pos);
+    long search(long key);
+    void retrieve(IndexEntry& entry, long pos);
 };
 
 #endif
