@@ -11,3 +11,13 @@ std::ostream& DepositAccount::write(std::ostream& strm) const{
     strm.write((char*)&deb, sizeof(deb));
     return strm;
 }
+
+// --------------------------------------------------------------------
+// ----- DepositAccount::read()                                   -----
+// --------------------------------------------------------------------
+std::istream& DepositAccount::read(std::istream& strm){
+    if(!Account::read(strm)){ return strm; }
+    strm.read((char*)&limit, sizeof(limit));
+    strm.read((char*)&deb, sizeof(deb));
+    return strm;
+}
