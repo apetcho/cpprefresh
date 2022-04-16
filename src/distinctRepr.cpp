@@ -138,4 +138,9 @@ private:
     int min(int a, int b) const {
         return a < b ? a : b;
     }
+
+    // -- labeled()
+    bool labeled(Vertex *vertex) const{
+        return vertices[vertex->idnum].labeled;
+    }
 };
