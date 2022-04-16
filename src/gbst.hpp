@@ -134,3 +134,28 @@ void BST<T>::clear(BSTNode<T> *node){
         delete node;
     }
 }
+
+// ----------------------------------------------------------------------
+// ----- BST<T>::insert(item)                                       -----
+// ----------------------------------------------------------------------
+template<typename T>
+void BST<T>::insert(const T& element){
+    if(root == nullptr){
+        root = new BSTNode<T>(element);
+        return;
+    }
+
+    BSTNode<T> *node = root;
+    BSTNode<T> *prev = nullptr;
+    /* find appropiate place and insert a new node holding element */
+    while(node != nullptr){
+        prev = node;
+        if(element < node->item){ node = node->left; }
+        else{ node = node->right; }
+    }
+    if( element < prev->item){
+        prev->left = new BSTNode<T>(element);
+    }else{
+        prev->right = new BSTNode<T>(element);
+    }
+}
