@@ -171,3 +171,17 @@ void BST<T>::recursive_insert(BSTNode<T>*& node, const T& element){
         recursive_insert(node->left, element);
     }else{ recursive_insert(node->right, element);}
 }
+
+// ----------------------------------------------------------------------
+// ----- BST<T>::search(node, item)                                 -----
+// ----------------------------------------------------------------------
+template<typename T>
+T* BST<T>::search(BSTNode<T> *node, const T& element) const {
+    while(node != nullptr){
+        if(element == node->item){ return &node->item; }
+        else if(element < node->item){ node = node->left; }
+        else { node = node->right; }
+    }
+
+    return nullptr;
+}
