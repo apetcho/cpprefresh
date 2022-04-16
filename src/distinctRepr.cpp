@@ -121,11 +121,19 @@ class LocalTree: public BST<NetTreeNode>{
 // ----------------------------------------------------------------------
 class Network{
 public:
+    Network() : sink(1), source(0), none(-1), nvertices(2){
+        verticePtr = new VertexArrayRecord*;
+    }
+
+    void read_committees(std::string& committees);
+    void ford_fulkerson_max_flow();
+    
 
 private:
     const int sink;
     const int source;
     const int none;
+    int nvertices;
     VertexArrayRecord *vertices;
     VertexArrayRecord **verticePtr;
 
@@ -143,4 +151,10 @@ private:
     bool labeled(Vertex *vertex) const{
         return vertices[vertex->idnum].labeled;
     }
+
+    void label(Vertex*, int);
+    void augment_path();
+
+    friend class LocalTree;
+    friend std::ostream(std::ostream&, const Network&);
 };
