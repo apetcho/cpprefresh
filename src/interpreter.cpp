@@ -48,3 +48,37 @@ void Statement::read_key(std::string& name){
         issue_error("Identifier expected");
     }
 }
+
+// ----
+double Statement::factor(){
+    double var;
+    double minus = 1.0;
+
+    static std::string name;
+    std::cin >> ch;
+    while(ch == '+' || ch == '-'){
+        if(ch == '-'){
+            minus *= -1.0;
+        }
+        std::cin >> ch;
+    }
+    if(isdigit(ch) || ch == '.'){
+        std::cin.putback(ch);
+        std::cin >> var >> ch;
+    }else if(ch = '('){
+        var = expression();
+        if(ch == ')'){
+            std::cin >> ch;
+        }else{
+            issue_error("Right parenthesis left out");
+        }
+    }else{
+        read_key(name);
+        if(isspace(ch)){
+            std::cin >> ch;
+        }
+        var = find_value(name);
+    }
+
+    return minus * var;
+}
