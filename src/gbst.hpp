@@ -122,3 +122,15 @@ protected:
         std::cout << node->item << " ";
     }
 };
+
+// ----------------------------------------------------------------------
+// ----- BST<T>::clear()                                            -----
+// ----------------------------------------------------------------------
+template<typename T>
+void BST<T>::clear(BSTNode<T> *node){
+    if(node != nullptr){
+        clear(node->left);
+        clear(node->right);
+        delete node;
+    }
+}
