@@ -315,7 +315,29 @@ void Network::label(Vertex *vertex, int val){
 // ----- Network::augment_path()                                    -----
 // ----------------------------------------------------------------------
 void Network::augment_path(){
-    /** @todo */
+    int i;
+    int sinkFlow = vertices[sink].vertexFlow;
+    Stack<std::string> path;
+    for(i=sink; i != source; i = vertices[i].parent){
+        path.push(vertices[i].idname);
+        if(vertices[i].corrVer->forward){
+            vertices[i].corrVer->edgeFlow += sinkFlow;
+        }else{
+            vertices[i].corrVer->edgeFlow -= sinkFlow;
+        }
+        if(vertices[i].parent != source && i != sink){
+            vertices[i].corrVer->twin->edgeFlow = vertices[i].corrVer->edgeFlow;
+        }
+    }
+
+    for(i=0; i < nvertices; i++){
+        vertices[i].labeled = false;
+    }
+    std::cout << " source";
+    while(!path.empty()){
+        std::cout << " => " << path.pop();
+    }
+    std::cout << " (augmented by " << sinkFlow << ");" << std::endl;
 }
 
 // ----------------------------------------------------------------------
