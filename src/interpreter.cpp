@@ -116,3 +116,38 @@ double Statement::expression(){
         }
     }
 }
+
+// -----
+void Statement::get_statement(){
+    std::string name;
+    std::string cmd;
+    double val;
+
+    std::cout << "Enter a statement:" << std::endl
+        << ">> ";
+    std::cin >> ch;
+    read_key(name);
+    cmd = std::string(name);
+    for(int i=0; i < cmd.size(); i++){
+        cmd[i] = toupper(cmd[i]);
+    }
+    if(cmd == "STATUS"){
+        return *this;
+    }else if(cmd == "PRINT"){
+        read_key(name);
+        std::cout << name << " = " << find_value(name) << std::endl;
+    }else if(cmd == "END"){
+        exit(EXIT_SUCCESS);
+    }else{
+        if(isspace(ch)){
+            std::cin >> ch;
+        }
+        if(ch == '='){
+            val = expression();
+            if(ch != ";")
+            issue_error("There are some extras in the statement");
+        }else{
+            process_node(name, val);
+        }
+    }
+}
