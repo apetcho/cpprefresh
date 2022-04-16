@@ -385,3 +385,27 @@ void BST<T>::iterative_inorder(){
         else{ node = nullptr; }
     }
 }
+
+// ----------------------------------------------------------------------
+// ----- BST<T>::iterative_postorder()                              -----
+// ----------------------------------------------------------------------
+template<typename T>
+void BST<T>::iterative_postorder(){
+    Stack<BSTNode<T>*> travStack;
+    BSTNode<T> *node = root;
+    BSTNode<T> *q = root;
+
+    while(node != nullptr){
+        for(; node->left != nullptr; node = node->left){
+            travStack.push(node);
+        }
+        while(node->right == nullptr || node->right == q){
+            visit(node);
+            q = node;
+            if(travStack.empty()){ return; }
+            node = travStack.pop();
+        }
+        travStack.push(node);
+        node = node->right;
+    }
+}
