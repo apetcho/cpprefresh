@@ -360,3 +360,28 @@ void BST<T>::iterative_preorder(){
         }
     }
 }
+
+// ----------------------------------------------------------------------
+// ----- BST<T>::iterative_inorder()                                -----
+// ----------------------------------------------------------------------
+template<typename T>
+void BST<T>::iterative_inorder(){
+    Stack<BSTNode<T>*> travStack;
+    BSTNode<T> *node = root;
+
+    while(node != nullptr){
+        while(node != nullptr){
+            if(node->right){ travStack.push(node->right); }
+            travStack.push(node);
+            node = node->left;
+        }
+        node = travStack.pop();
+        while(!travStack.empty() && node->right ==nullptr){
+            visit(node);
+            node = travStack.pop();
+        }
+        visit(node);
+        if(!travStack.empty()){ node = travStack.pop(); }
+        else{ node = nullptr; }
+    }
+}
