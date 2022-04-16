@@ -17,3 +17,21 @@ std::fstream& IndexEntry::read_at(std::fstream& strm, long pos){
     strm.read((char*)&recNr, sizeof(recNr));
     return strm;
 }
+
+
+/** @todo add documentation */
+IndexFile::IndexFile(const std::string& fname){
+    std::ios::openmode mode = std::ios::in|std::ios::out|std::ios::binary;
+
+    index.open(fname.c_str(), mode);
+    if(!index){ // If the file doese not exist
+        index.clear();
+        mode |= std::ios::trunc;
+        index.open(fname.c_str(), mode);
+        if(!index){ return; }
+    }else{
+        name = fname;
+    }
+}
+
+// ....
