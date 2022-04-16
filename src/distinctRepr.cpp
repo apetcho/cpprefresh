@@ -297,7 +297,18 @@ void Network::read_committees(std::string filename){
 // ----- Network::label(Vertex*, int)                               -----
 // ----------------------------------------------------------------------
 void Network::label(Vertex *vertex, int val){
-    /** @todo */
+    vertices[vertex->idnum].labeled = true;
+    if(vertex->forward){
+        vertices[vertex->idnum].vertexFlow = min(
+            vertices[val], edgeSlack(vertex)
+        );
+    }else{
+        vertices[vertex->idnum].vertexFlow = min(
+            vertices[val].vertexFlow, vertex->edgeFlow
+        );
+    }
+    vertices[vertex->idnum].parent = val;
+    vertices[vertex->idnum].corrVer = vertex;
 }
 
 // ----------------------------------------------------------------------
