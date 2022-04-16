@@ -9,4 +9,7 @@ add_executable(LibraryApp src/library.cpp)
 add_library(dbapp src/dbapp.cpp src/dbapp.hpp)
 add_executable(DBMain src/dbappmain.cpp src/dbapp.hpp)
 target_link_libraries(DBMain dbapp)
+
 # ----
+add_executable(InterpMain 
+    src/interpmain.cpp src/interpreter.cpp src/interpreter.hpp)
