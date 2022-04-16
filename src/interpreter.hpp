@@ -43,7 +43,7 @@ private:
     double factor();
     double term();
     double expression();
-    void read_key(std::string& key);
+    void read_key(std::string& name);
 
     void issue_error(const char *message){
         std::cerr << message << std::endl;

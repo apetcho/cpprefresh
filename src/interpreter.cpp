@@ -29,3 +29,22 @@ void Statement::process_node(const std::string& name, double val){
         kvlist.pop_front(tmp);
     }
 }
+
+// ----
+void Statement::read_key(std::string& name){
+    int i=0;
+    char *buf;
+    if(isspace(ch)){
+        std::cin >> ch;     // skip blanks;
+    }
+    if(isalpha(ch)){
+        while(isalnum(ch)){
+            buf[i++] = ch;
+            std::cin.get(ch);
+        }
+        buf[i] = '\0';
+        name = std::string(buf);
+    }else{
+        issue_error("Identifier expected");
+    }
+}
