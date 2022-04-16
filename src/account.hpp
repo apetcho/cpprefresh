@@ -11,8 +11,10 @@ enum class AccountType {ACCOUNT, DEP_ACC, SAV_ACC };
 // --------------------------------------------------------------------
 class Account{
 private:
-    //! @todo see ... chap. 18
-    // Data member as previously. 
+    std::string name;       // Account holder
+    unsigned long nr;       // Account number
+    double balance;         // Balance of account
+
 
 public:
     //! @todo see ... chap. 18
@@ -26,4 +28,22 @@ public:
     // ---
     virtual std::ostream& write(std::ostream& strm) const;
     virtual std::istream& read(std::istream& strm);
+};
+
+// --------------------------------------------------------------------
+// ----- class DepositAccount                                     -----
+// --------------------------------------------------------------------
+class DepositAccount : public Account{
+    /** @todo ...*/
+    /* Data memebers, constructor, ...*/
+
+    // ---
+    AccountType get_account_type() const {
+        return AccountType::DEP_ACC;
+    }
+
+    // ---
+    std::ostream& write(std::ostream& strm) const;
+    std::istream& read(std::istream& strm);
+
 };
