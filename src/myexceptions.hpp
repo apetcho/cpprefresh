@@ -26,4 +26,13 @@ class OpenError : public FileError{
 public:
     OpenError(const std::string& fname) : FileError(fname) {}
 };
+
+// --------------------------------------------------------------------
+// ----- class ReadError                                          -----
+// --------------------------------------------------------------------
+class ReadError : public FileError{
+public:
+    ReadError(const std::string& fname) : FileError(fname){}
+};
+
 #endif
