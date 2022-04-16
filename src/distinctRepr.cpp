@@ -127,7 +127,7 @@ public:
 
     void read_committees(std::string& committees);
     void ford_fulkerson_max_flow();
-    
+
 
 private:
     const int sink;
@@ -158,3 +158,11 @@ private:
     friend class LocalTree;
     friend std::ostream(std::ostream&, const Network&);
 };
+
+// ----------------------------------------------------------------------
+// ----- operator<< for NetTreeNode                                 -----
+// ----------------------------------------------------------------------
+std::ostream& operator<<(std::ostream& out, const NetTreeNode& node){
+    out << node.idnum << " " << node.idname << " ";
+    return out;
+}
