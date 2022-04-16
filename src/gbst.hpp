@@ -228,7 +228,7 @@ void BST<T>::preorder(BSTNode<T> *node){
 }
 
 // ----------------------------------------------------------------------
-// ----- BST<T>::postorder(item)                                    -----
+// ----- BST<T>::postorder(*node)                                   -----
 // ----------------------------------------------------------------------
 template<typename T>
 void BST<T>::postorder(BSTNode<T> *node){
@@ -237,4 +237,31 @@ void BST<T>::postorder(BSTNode<T> *node){
         postorder(node->right);
         visit(node);
     }
+}
+
+// ----------------------------------------------------------------------
+// ----- BST<T>::delete_by_copying(item)                            -----
+// ----------------------------------------------------------------------
+template<typename T>
+void BST<T>::delete_by_copying(BSTNode<T>*& node){
+    BSTNode<T> *prev;
+    BSTNode<T> *tmp = node;
+    if(node->right == nullptr){         // node right child
+        node = node->left;
+    }else if(node->left == nullptr){    // node left child
+        node = node->right;
+    }else{                              // has both children
+        tmp = node->left;
+        prev = node;
+        while(tmp->right != nullptr){
+            prev = tmp;
+            tmp = tmp->right;
+        }
+        node->item = tmp->item;
+        if(prev == node){
+            prev->left = tmp->left;
+        }else{ prev->right = tmp->left; }
+    }
+
+    delete tmp;
 }
