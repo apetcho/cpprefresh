@@ -47,3 +47,20 @@ class DepositAccount : public Account{
     std::istream& read(std::istream& strm);
 
 };
+
+// --------------------------------------------------------------------
+// ----- class SavingAccount                                      -----
+// --------------------------------------------------------------------
+class SavingAccount: public Account{
+    /** @todo ... */
+    /* Data members, constructor, ... */
+
+    // ---
+    AccountType get_account_type() const {
+        return AccountType::SAV_ACC;
+    }
+
+    // ---
+    std::ostream& write(std::ostream& strm) const;
+    std::istream& read(std::istream& strm);
+};
