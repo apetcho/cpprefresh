@@ -344,7 +344,44 @@ void Network::augment_path(){
 // ----- Network::ford_fulkerson_max_flow()                         -----
 // ----------------------------------------------------------------------
 void Network::ford_fulkerson_max_flow(){
-    /** @todo */
+    Stack<int> _labeled;
+    Vertex *vertex;
+    std::list<Vertex>::iterator iter;
+    for(int i=0; i < nvertices; i++){
+        vertices[i].labeled = false;
+        vertices[i].vertexFlow = 0;
+        vertices[i].parent = none;
+    }
+    vertices[source].vertexFlow = INT_MAX;
+    _labeled.push(source);
+    std::cout << *this;
+    std::cout << "Augmenting paths:\n";
+    while(!_labeled.empty()){
+        int v = _labeled.pop();
+        for(iter = vertices[v].adjacent->begin();
+            iter != vertices[v].adjacent->end(); iter++
+        ){
+            vertex = &*iter;
+            if(!labeled(vertex)){
+                if(vertex->forward && vertex->edgeFlow > 0){
+                    label(vertex, v);
+                }else if(!vertex->forward && vertex->edgeFlow > 0){
+                    label(vertex, v);
+                }
+                if(labeled(vertex)){
+                    if(vertex->idnum == sink){
+                        augment_path();
+                        while(!_labeled.empty()){ _labeled.pop(); }
+                        _labeled.push(source);
+                        break;
+                    }else{
+                        _labeled.push(vertex->idnum);
+                        vertices[vertex->idnum].labeled = true;
+                    }
+                }//
+            }
+        }
+    }
 }
 
 // ------------------------
