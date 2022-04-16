@@ -34,4 +34,23 @@ public:
     }
 };
 
+// ---- forward declaration
+template<typename T> class BST;
+
+// ----------------------------------------------------------------------
+// ----- CUSTOM GENERIC BST                                         -----
+// ----------------------------------------------------------------------
+template<typename T>
+class BSTNode {
+public:
+    BSTNode(){}
+
+    BSTNode(const T& elt, BSTNode<T> *lhs=nullptr, BSTNode<T> *rhs=nullptr)
+    : item(elt), left(lhs), right(rhs){}
+
+    T item;
+    BSTNode<T> *left;
+    BSTNode<T> *right;
+};
+
 #endif
