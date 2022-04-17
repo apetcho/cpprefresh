@@ -146,3 +146,16 @@ void IndexFileSystem::insert(Account& account) throw(ReadError, WriteError) {
         return false;
     }
 }
+
+/** @todo add documentation */
+Account* IndexFileSystem::retrieve(long key){
+    // Get the record and address from the index
+    long pos = search(key);     // Byte offset of index entry
+
+    if(pos == -1){ return nullptr; }
+    else{
+        IndexEntry entry;
+        IndexFile::retrieve(entry, pos);
+        return AccountFile::retrieve(entry.get_pos());
+    }
+}
