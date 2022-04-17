@@ -62,6 +62,40 @@ void IndexFile::display() throw(ReadError){
     index.clear();
 }
 
+/** @todo add documentation */
+long IndexFile::search(long k) throw(ReadError){
+    IndexEntry entry;
+    long key;
+    long mid, begin=0, end;
+    int size = entry.record_size();
+
+    index.clear();
+    index.seekg(0L, std::ios::end);
+    end = index.tellg()/size;
+
+    if(!index){ throw ReadError(name); }
+
+    if( end == 0){ return -1; }
+
+    end -= 1;
+
+    while(begin < end){
+        mid = (begin + end + 1)/2;
+        entry.read_at(index, mid*size);
+        if(!index){throw ReadError(name);}
+
+        key = entry.get_key();
+        if(k < key){ end = mid - 1; }
+        else{ begin = mid; }
+    }
+
+    entry.read_at(index, begin * size);
+    if(!index){throw ReadError(name); }
+
+    if(k == entry.get_key()){ return begin * size; }
+    else{ return -1; }
+}
+
 // --------------------------------------------------------------------
 // ----- IndexFile::insert()                                      -----
 // --------------------------------------------------------------------
