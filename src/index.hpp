@@ -13,25 +13,32 @@
 class IndexEntry{
 private:
     long key;       // Key
-    long recNr;     // Offset
+    long recPos;     // Offset
 
 public:
     // --- ctor
-    IndexEntry(long k=0L, long n=0L) : key(k), recNr(n) {}
+    IndexEntry(long k=0L, long n=0L) : key(k), recPos(n) {}
 
     /** @todo Access methods ... and :*/
-    long get_key() const; // ...
-    void set_key(long k); // ...
-    void set_pos(long n); // ...
+    long get_key() const{ return key; }
+    void set_key(long key){this->key = key; }
+    void set_pos(long pos){this->recPos = pos; }
+    long get_pos() const { return recPos; }
 
     int record_size() const{
-        return sizeof(key) + sizeof(recNr);
+        return sizeof(key) + sizeof(recPos);
     }
 
     std::fstream& write(std::fstream& strm) const;
     std::fstream& read(std::fstream& strm);
     std::fstream& write_at(std::fstream& strm, long pos) const;
-    std::fstream& read_at(std::fstream& strm, long pos); 
+    std::fstream& read_at(std::fstream& strm, long pos);
+
+    void display() const {
+        std::cout
+            << " Account Nr: " << key
+            << "   Position: " << recPos << std::endl;
+    }
 };
 
 // --------------------------------------------------------------------
