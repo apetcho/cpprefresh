@@ -117,7 +117,21 @@ public:
 // --------------------------------------------------------------------
 class SavingAccount: public Account{
     /** @todo ... */
-    /* Data members, constructor, ... */
+private:
+    double interest;            // Compound interest
+
+public:
+    SavingAccount(
+        const std::string& nm="X",
+        unsigned long n=1111111L,
+        double bal=0.0,
+        double ir=0.0
+    ): Account(nm, n, bal), interest(ir)
+    {}
+
+    // ---
+    double get_interest() const { return interest; }
+    void set_interest(double ir){ interest = ir; } 
 
     // ---
     AccountType get_account_type() const {
@@ -127,6 +141,16 @@ class SavingAccount: public Account{
     // ---
     std::ostream& write(std::ostream& strm) const;
     std::istream& read(std::istream& strm);
+
+    // ---
+    void display() const {
+        Account::display();
+        std::cout
+            << " Compount interest:     " << interest << std::endl
+            << "------------------------------------------------\n"
+            << std::endl;
+
+    }
 };
 
 // --------------------------------------------------------------------
