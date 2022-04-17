@@ -80,7 +80,40 @@ AccountFile::AccountFile(const std::string& nm) throw(OpenError){
 // ----- AccountFile::display()                                   -----
 // --------------------------------------------------------------------
 void AccountFile::display() throw(ReadError){
-    /** @todo */
+    Account account;
+    Account *pAccount = nullptr;
+    DepositAccount depAcc;
+    SavingAccount savAcc;
+    AccountType accType;
+    int accId;
+
+    if(!stream.seekg(0L)){ throw ReadError(name);}
+
+    std::cout << "\nThe account file: " << std::endl;
+
+    while(stream.read((char*)&accId, sizeof(accId))){
+        accType = AccountType{accId};
+        switch(accType){
+        case AccountType::ACCOUNT:
+            pAccount = &account;
+            break;
+        case AccountType::DEP_ACC:
+            pAccount = &depAcc;
+            break;
+        case AccountType::SAV_ACC:
+            pAccount = &savAcc;
+            break;
+        default:
+            std::cerr << "Invalid flag in account file" << std::endl;
+            exit(EXIT_FAILURE);
+        }
+
+        if(!pAccount->read(stream)){ break; }
+        pAccount->display();
+        std::cin.get();         // Go on with return 
+    }
+    if(!stream.eof()){ throw ReadError(name); }
+    stream.clear();
 }
 
 // --------------------------------------------------------------------
