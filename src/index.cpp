@@ -63,3 +63,10 @@ void IndexFile::insert(long k, long n) throw(ReadError, WriteError){
 
     if(!index){throw WriteError(name); }
 }
+
+// --------------------------------------------------------------------
+// ----- IndexFileSystem::insert()                                -----
+// --------------------------------------------------------------------
+void IndexFileSystem::insert(Account& account){
+    /** @todo: see p. 654 */
+}

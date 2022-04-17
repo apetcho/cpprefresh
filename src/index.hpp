@@ -43,12 +43,12 @@ private:
     std::string name;               // Filename of index
 
 public:
-    IndexFile(const std::string& fname);
+    IndexFile(const std::string& fname) throw(OpenError);
     ~IndexFile(){ index.close(); }
 
     void insert(long key, long pos) throw(ReadError, WriteError);
-    long search(long key);
-    void retrieve(IndexEntry& entry, long pos);
+    long search(long key) throw (ReadError);
+    void retrieve(IndexEntry& entry, long pos) throw(ReadError);
 };
 
 

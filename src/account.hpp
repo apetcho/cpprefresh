@@ -4,6 +4,8 @@
 #define __MY_ACCOUNT_H_
 #include<iostream>
 #include<fstream>
+#include<iomanip>
+#include<string>
 
 #include "myexceptions.hpp"
 
@@ -22,8 +24,23 @@ private:
 
 
 public:
-    //! @todo see ... chap. 18
-    // Constructor, access methods ...
+    Account(
+        const std::string cname="X",
+        unsigned long cnr = 1111111L,
+        double cbalance = 0.0
+    ) : name(cname), nr(cnr), balance(cbalance){}
+
+    virtual ~Account(){}
+
+    // Access methods
+    long get_accountno() const { return nr; }
+    void set_accountno(unsigned long n){ nr = n; }
+    double get_balance() const  { return balance; }
+    void set_balance(double value){ balance = value; }
+    std::string get_account_name() const { return name; }
+    void set_account_name(const std::string& name){
+        this->name = name;
+    }
 
     //  ---
     virtual AccountType get_account_type() const {
@@ -33,6 +50,17 @@ public:
     // ---
     virtual std::ostream& write(std::ostream& strm) const;
     virtual std::istream& read(std::istream& strm);
+
+    // ---
+    virtual void display() const {
+        std::cout << std::fixed << std::setprecision(2)
+            << "--------------------------------------------------\n"
+            << " Account holder:        " << name       << std::endl
+            << " Account number:        " << nr         << std::endl
+            << " Balance of account:    " << balance    << std::endl
+            << "--------------------------------------------------\n"
+            << std::endl;
+    }
 };
 
 // --------------------------------------------------------------------
