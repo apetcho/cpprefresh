@@ -5,6 +5,7 @@
 #include<iostream>
 #include<string>
 #include "myexceptions.hpp"
+#include "account.hpp"
 
 // --------------------------------------------------------------------
 // ----- class IndexEntry                                         -----
@@ -48,6 +49,24 @@ public:
     void insert(long key, long pos) throw(ReadError, WriteError);
     long search(long key);
     void retrieve(IndexEntry& entry, long pos);
+};
+
+
+// --------------------------------------------------------------------
+// ----- class IndexFileSystem                                    -----
+// --------------------------------------------------------------------
+class IndexFileSystem : public AccountFile, public IndexFile {
+private:
+    std::string name;
+
+public:
+    IndexFileSystem(const std::string nm)
+    : AccountFile(nm + ".prim"), IndexFile(nm + ".ind"){
+        this->name = nm;
+    }
+
+    void insert(Account& account);
+    Account* retrieve(long key);
 };
 
 #endif
