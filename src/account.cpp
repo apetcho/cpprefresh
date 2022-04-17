@@ -47,7 +47,11 @@ std::istream& DepositAccount::read(std::istream& strm){
 // ----- SavingAccount::write()                                   -----
 // --------------------------------------------------------------------
 std::ostream& SavingAccount::write(std::ostream& strm) const {
-    /** @todo */
+    if(!Account::write(strm)){
+        return strm;
+    }
+    strm.write((char*)&interest, sizeof(interest));
+    return strm;
 }
 
 // --------------------------------------------------------------------
