@@ -22,7 +22,6 @@ private:
     unsigned long nr;       // Account number
     double balance;         // Balance of account
 
-
 public:
     Account(
         const std::string cname="X",
@@ -33,13 +32,17 @@ public:
     virtual ~Account(){}
 
     // Access methods
-    long get_accountno() const { return nr; }
+    unsigned long get_accountno() const { return nr; }
     void set_accountno(unsigned long n){ nr = n; }
     double get_balance() const  { return balance; }
     void set_balance(double value){ balance = value; }
-    std::string get_account_name() const { return name; }
-    void set_account_name(const std::string& name){
+    const std::string& get_account_name() const { return name; }
+    bool set_account_name(const std::string& nm){
+        if(nm.size() < 1){ /* empty name */
+            return false;
+        }
         this->name = name;
+        return true;
     }
 
     //  ---
@@ -68,10 +71,26 @@ public:
 // --------------------------------------------------------------------
 class DepositAccount : public Account{
 private:
-    long limit; /** @todo XXX */
-    long deb;   /** @todo XXX */
+    double limit;               // Overdrawn limit
+    double interest;            // Interest rate
+    double deb;  // ?????????????
     /** @todo ...*/
     /* Data memebers, constructor, ...*/
+
+public:
+    DepositAccount(
+        const std::string nm="X", unsigned long no=1111111L,
+        double bal=0.0, double li=0.0, double ir=0.0
+    ): Account(nm, no, bal), limit(li), interest(ir)
+    {}
+
+    // --- Access methods
+    // limit, interest
+    double get_limit() const { return limit; }
+    double get_interest() const { return interest; }
+    void set_limit(double limit){ this->limit = limit; }
+    void set_interest(double interest){ this->interest = interest; }
+
 
     // ---
     AccountType get_account_type() const {
@@ -82,6 +101,15 @@ private:
     std::ostream& write(std::ostream& strm) const;
     std::istream& read(std::istream& strm);
 
+    // ---
+    void display() const{
+        Account::display();
+        std::cout
+            << " Overdrawn limit:        " << limit << std::endl
+            << " Competitive interest:   " << interest << "\n"
+            << "----------------------------------------------\n"
+            << std::endl;
+    }
 };
 
 // --------------------------------------------------------------------
