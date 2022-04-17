@@ -167,6 +167,9 @@ public:
 
     long append(Account& account) throw(WriteError);
     Account* retrieve(long pos) throw(ReadError);
+
+    // ---
+    void display() throw(ReadError);
 };
 
 #endif

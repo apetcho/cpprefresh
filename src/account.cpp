@@ -1,4 +1,19 @@
+#include <typeinfo>
 #include "account.hpp"
+
+// --------------------------------------------------------------------
+// ----- Account::write()                                         -----
+// --------------------------------------------------------------------
+std::ostream& Account::write(std::ostream& strm) const {
+    /** @todo */
+}
+
+// --------------------------------------------------------------------
+// ----- Account::read()                                          -----
+// --------------------------------------------------------------------
+std::istream& Account::read(std::istream& strm){
+    /** @todo */
+}
 
 // --------------------------------------------------------------------
 // ----- DepositAccount::write()                                  -----
@@ -23,6 +38,34 @@ std::istream& DepositAccount::read(std::istream& strm){
 }
 
 // --------------------------------------------------------------------
+// ----- SavingAccount::write()                                   -----
+// --------------------------------------------------------------------
+std::ostream& SavingAccount::write(std::ostream& strm) const {
+    /** @todo */
+}
+
+// --------------------------------------------------------------------
+// ----- SavingAccount::read()                                    -----
+// --------------------------------------------------------------------
+std::istream SavingAccount::read(std::istream& strm){
+    /** @todo */
+}
+
+// --------------------------------------------------------------------
+// ----- AccountFile::AccountFile() ctor                          -----
+// --------------------------------------------------------------------
+AccountFile::AccountFile(const std::string& nm) throw(OpenError){
+    /** @todo */
+}
+
+// --------------------------------------------------------------------
+// ----- AccountFile::display()                                   -----
+// --------------------------------------------------------------------
+void AccountFile::display() throw(ReadError){
+    /** @todo */
+}
+
+// --------------------------------------------------------------------
 // ----- AccountFile::append()                                    -----
 // --------------------------------------------------------------------
 long AccountFile::append(Account& account) throw(WriteError){
@@ -39,4 +82,11 @@ long AccountFile::append(Account& account) throw(WriteError){
 
     if(!stream){ throw WriteError(name); }
     else{ return pos; }
+}
+
+// --------------------------------------------------------------------
+// ----- AccountFile::retrieve()                                  -----
+// --------------------------------------------------------------------
+Account* AccountFile::retrieve(long pos) throw(ReadError){
+    /** @todo */
 }
