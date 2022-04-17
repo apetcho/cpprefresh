@@ -67,7 +67,13 @@ std::istream SavingAccount::read(std::istream& strm){
 // ----- AccountFile::AccountFile() ctor                          -----
 // --------------------------------------------------------------------
 AccountFile::AccountFile(const std::string& nm) throw(OpenError){
-    /** @todo */
+    std::ios::openmode mode = std::ios::in | std::ios::out |
+        std::ios::app | std::ios::binary;
+    stream.open(nm.c_str(), mode);
+    if(!stream){ throw OpenError(nm); }
+    else{
+        this->name = nm;
+    }
 }
 
 // --------------------------------------------------------------------
