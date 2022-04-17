@@ -5,7 +5,10 @@
 // ----- Account::write()                                         -----
 // --------------------------------------------------------------------
 std::ostream& Account::write(std::ostream& strm) const {
-    /** @todo */
+    strm << name << '\0';
+    strm.write((char*)&nr, sizeof(nr));
+    strm.write((char*)&balance, sizeof(balance));
+    return strm;
 }
 
 // --------------------------------------------------------------------

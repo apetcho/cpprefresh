@@ -116,7 +116,6 @@ public:
 // ----- class SavingAccount                                      -----
 // --------------------------------------------------------------------
 class SavingAccount: public Account{
-    /** @todo ... */
 private:
     double interest;            // Compound interest
 
