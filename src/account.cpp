@@ -91,7 +91,7 @@ void AccountFile::display() throw(ReadError){
 
     std::cout << "\nThe account file: " << std::endl;
 
-    while(stream.read((char*)&accId, sizeof(accId))){
+    while(stream.read((char*)&accId, sizeof(int))){
         accType = AccountType{accId};
         switch(accType){
         case AccountType::ACCOUNT:
@@ -127,7 +127,7 @@ long AccountFile::append(Account& account) throw(WriteError){
 
     AccountType accId = account.get_account_type();
     int id = (int)accId;
-    stream.write((char*)&id, sizeof(id));
+    stream.write((char*)&id, sizeof(int));
     if(!stream){ throw WriteError(name); }
     else{ account.write(stream); }
 
@@ -139,5 +139,31 @@ long AccountFile::append(Account& account) throw(WriteError){
 // ----- AccountFile::retrieve()                                  -----
 // --------------------------------------------------------------------
 Account* AccountFile::retrieve(long pos) throw(ReadError){
-    /** @todo */
+    stream.clear();
+    stream.seekg(pos);      // Set the get pointer
+
+    if(!stream){ throw ReadError(name); }
+    AccountType accType;
+    int accId;
+    stream.read((char*)&accId, sizeof(accId));
+    accType = AccountType{accId};
+
+    if(!stream){ throw ReadError(name); }
+
+    Account *buf;
+    switch(accType){
+    case AccountType::ACCOUNT:
+        buf = new Account;
+        break;
+    case AccountType::SAV_ACC:
+        buf = new SavingAccount;
+        break;
+    case AccountType::DEP_ACC:
+        buf = new DepositAccount;
+        break;
+    }
+
+    if(!(buf->read(stream))){ throw ReadError(name); }
+
+    return buf;
 }
