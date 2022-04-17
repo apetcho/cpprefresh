@@ -15,7 +15,10 @@ std::ostream& Account::write(std::ostream& strm) const {
 // ----- Account::read()                                          -----
 // --------------------------------------------------------------------
 std::istream& Account::read(std::istream& strm){
-    /** @todo */
+    std::getline(strm, name, '\0');
+    strm.read((char*)&nr, sizeof(nr));
+    strm.read((char*)&balance, sizeof(balance));
+    return strm;
 }
 
 // --------------------------------------------------------------------
