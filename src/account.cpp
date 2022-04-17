@@ -29,7 +29,7 @@ std::ostream& DepositAccount::write(std::ostream& strm) const{
         return strm;
     }
     strm.write((char*)&limit, sizeof(limit));
-    strm.write((char*)&deb, sizeof(deb));
+    strm.write((char*)&interest, sizeof(interest));
     return strm;
 }
 
@@ -39,7 +39,7 @@ std::ostream& DepositAccount::write(std::ostream& strm) const{
 std::istream& DepositAccount::read(std::istream& strm){
     if(!Account::read(strm)){ return strm; }
     strm.read((char*)&limit, sizeof(limit));
-    strm.read((char*)&deb, sizeof(deb));
+    strm.read((char*)&interest, sizeof(interest));
     return strm;
 }
 

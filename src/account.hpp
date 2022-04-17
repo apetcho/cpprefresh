@@ -73,10 +73,7 @@ class DepositAccount : public Account{
 private:
     double limit;               // Overdrawn limit
     double interest;            // Interest rate
-    double deb;  // ?????????????
-    /** @todo ...*/
-    /* Data memebers, constructor, ...*/
-
+    
 public:
     DepositAccount(
         const std::string nm="X", unsigned long no=1111111L,
