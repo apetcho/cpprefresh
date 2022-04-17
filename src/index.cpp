@@ -34,4 +34,32 @@ IndexFile::IndexFile(const std::string& fname){
     }
 }
 
-// ....
+// --------------------------------------------------------------------
+// ----- IndexFile::insert()                                      -----
+// --------------------------------------------------------------------
+void IndexFile::insert(long k, long n) throw(ReadError, WriteError){
+    IndexEntry entry;
+    int size = entry.record_size();     // length of index entry
+    index.clear();
+    index.seekg(0, std::ios::end);
+    long nr = index.tellg();            // Get file length, o0 if file is empty
+
+    if(!index){ throw ReadError(name); }
+
+    nr -= size;                         // Last entry
+    bool found = false;
+    while(nr >= 0 && !found){
+        if(!entry.read_at(index, nr)){ throw ReadError(name); }
+
+        if( k < entry.get_key()){
+            entry.write_at(index, nr+size);
+            nr -= size;
+        }else{ found = true; }
+    }
+
+    entry.set_key(k);
+    entry.set_pos(n);
+    entry.write_at(index, nr + size);
+
+    if(!index){throw WriteError(name); }
+}
