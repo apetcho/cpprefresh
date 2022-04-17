@@ -58,7 +58,9 @@ std::ostream& SavingAccount::write(std::ostream& strm) const {
 // ----- SavingAccount::read()                                    -----
 // --------------------------------------------------------------------
 std::istream SavingAccount::read(std::istream& strm){
-    /** @todo */
+    if(!Account::read(strm)){ return strm; }
+    strm.read((char*)&interest, sizeof(interest));
+    return strm;
 }
 
 // --------------------------------------------------------------------
