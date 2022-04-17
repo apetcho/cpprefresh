@@ -24,6 +24,13 @@ std::fstream& IndexEntry::write(std::fstream& strm) const {
 }
 
 /** @todo add documentation */
+std::fstream& IndexEntry::read(std::fstream& strm){
+    strm.read((char*)&key, sizeof(key));
+    strm.read((char*)&recPos, sizeof(recPos));
+    return strm;
+}
+
+/** @todo add documentation */
 IndexFile::IndexFile(const std::string& fname){
     std::ios::openmode mode = std::ios::in|std::ios::out|std::ios::binary;
 
