@@ -60,5 +60,21 @@ public:
 // ---------------------------------------------------------------------
 // ----- class HashEntry
 // ---------------------------------------------------------------------
+class HashFile{
+private:
+    std::fstream stream;
+    std::string name;
+    unsigned long b;
+
+protected:
+    unsigned long hash_func(unsigned long key){ key % b; }
+
+public:
+    HashFile(const std::string s, unsigned long n) throw(OpenError);
+
+    void insert(HashEntry& record) throw(ReadError, WriteError);
+    HashEntry& retrieve(unsigned long key) throw(ReadError);
+    void display();
+};
 
 #endif
