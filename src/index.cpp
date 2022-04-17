@@ -45,6 +45,23 @@ IndexFile::IndexFile(const std::string& fname){
     }
 }
 
+/** @todo add documentation */
+void IndexFile::display() throw(ReadError){
+    IndexEntry entry;
+    index.seekg(0L);
+    if(!index){
+        throw ReadError("IndexFile: Setting the get pointer");
+    }
+
+    std::cout << std::endl << "The Index: " << std::endl;
+    while(true){
+        if(!entry.read(index)){ break;}
+        entry.display();
+    }
+    if(!index.eof()){ throw ReadError(name); }
+    index.clear();
+}
+
 // --------------------------------------------------------------------
 // ----- IndexFile::insert()                                      -----
 // --------------------------------------------------------------------

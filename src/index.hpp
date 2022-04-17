@@ -56,6 +56,7 @@ public:
     void insert(long key, long pos) throw(ReadError, WriteError);
     long search(long key) throw (ReadError);
     void retrieve(IndexEntry& entry, long pos) throw(ReadError);
+    void display() throw(ReadError);
 };
 
 
