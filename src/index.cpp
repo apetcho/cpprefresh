@@ -126,6 +126,14 @@ void IndexFile::insert(long k, long n) throw(ReadError, WriteError){
     if(!index){throw WriteError(name); }
 }
 
+/** @todo add documentation */
+void IndexFile::retrieve(IndexEntry& entry, long pos) throw(ReadError){
+    index.clear();
+    if(!entry.read_at(index, pos)){
+        throw ReadError(name);
+    }
+}
+
 // --------------------------------------------------------------------
 // ----- IndexFileSystem::insert()                                -----
 // --------------------------------------------------------------------
