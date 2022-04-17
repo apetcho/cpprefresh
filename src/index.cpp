@@ -137,6 +137,12 @@ void IndexFile::retrieve(IndexEntry& entry, long pos) throw(ReadError){
 // --------------------------------------------------------------------
 // ----- IndexFileSystem::insert()                                -----
 // --------------------------------------------------------------------
-void IndexFileSystem::insert(Account& account){
-    /** @todo: see p. 654 */
+void IndexFileSystem::insert(Account& account) throw(ReadError, WriteError) {
+    if(search(account.get_accountno()) == -1){
+        long pos = append(account);
+        IndexFile::insert(account.get_accountno(), pos);
+        return true;
+    }else{
+        return false;
+    }
 }

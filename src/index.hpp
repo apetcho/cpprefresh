@@ -73,7 +73,7 @@ public:
         this->name = nm;
     }
 
-    bool insert(Account& account);
+    bool insert(Account& account) throw(ReadError, WriteError);
     Account* retrieve(long key);
 };
 
